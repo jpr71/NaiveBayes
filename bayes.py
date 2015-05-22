@@ -58,16 +58,18 @@ class Bayes_Classifier:
       self.save(negative_dict, "Negative")
 
 
-   def classify(self, sText):
+   def classify_bayes(self, sText):
       """Given a target string sText, this function returns the most likely document
       class to which the target string belongs (i.e., positive, negative or neutral).
       """
       word_list = self.tokenize(sText)
       positive = self.probabilityPositive(word_list)
       negative = self.probabilityNegative(word_list)
-      #difference = abs(positive-negative)
-      print difference
-      if difference < 0.00000000000000000000000000000000000000000001:
+      difference = abs(positive-negative)
+      print "positive: ", positive
+      print "negative: ", negative
+      print "difference: ", difference
+      if difference < 1:
          return "neutral"
       elif positive > negative:
          return "positive"
@@ -78,26 +80,26 @@ class Bayes_Classifier:
    def probabilityPositive(self,lst):
       """Determines the probability of a text being positive given a list of the words
       contained in the text given as reference the training document Positive"""
-      probability_positive = 0.825
-      positive_features = 631382
+      probability_positive = 0
+      positive_features = 0.825
       for word in lst:
          if self.positive.has_key(word):
-            probability_positive *= self.positive[word]/float(positive_features)
+            probability_positive += math.log((self.positive[word]+1)/float(positive_features))
          else:
-            probability_positive *= 1/float(positive_features)
-      return probability_positive
+            probability_positive += math.log(1/float(positive_features))
+      return abs(probability_positive)
 
    def probabilityNegative(self,lst):
       """Determines the probability of a text being positive given a list of the words
       contained in the text given as reference the training document Positive"""
-      probability_negative = 0.175
-      negative_features = 134120
+      probability_negative = 0
+      negative_features = 0.175
       for word in lst:
          if self.negative.has_key(word):
-            probability_negative *= self.negative[word]/float(negative_features)
+            probability_negative += math.log((self.negative[word]+1)/float(negative_features))
          else:
-            probability_negative *= 1/float(negative_features)
-      return probability_negative
+            probability_negative += math.log(1/float(negative_features))
+      return abs(probability_negative)
 
 
    def loadFile(self, sFilename):
