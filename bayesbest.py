@@ -1,9 +1,3 @@
-# Name: Chris Dayal & Joshua Roberts
-# Date: 5/11/15
-# Description:
-#
-#
-
 import math, os, pickle, re, random
 
 
