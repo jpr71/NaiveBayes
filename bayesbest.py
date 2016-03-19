@@ -160,7 +160,7 @@ class Bayes_Classifier:
       #if difference < 1:
       # return "neutral"
 
-      # if there's a contrasting conjunction switch the positive and negative values e.g. the example of Stallone given in class
+      # if there's a contrasting conjunction switch the positive and negative values e.g. "This movie had a great plot, great actors BUT it was terrible.".
       for word in word_list:
          if word in contrasting_conjunctions:
             temp = positive
